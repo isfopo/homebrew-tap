@@ -1,4 +1,4 @@
-# isfopo/standby-homebrew-tap
+# isfopo/Tap
 
 Homebrew tap for standby.
 
