@@ -78,7 +78,7 @@ jobs:
       with:
         repository: ${{ github.repository }}
         path: tap-repo
-        token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Download formula
       uses: actions/download-artifact@v4
