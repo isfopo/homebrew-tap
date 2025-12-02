@@ -27,10 +27,14 @@ jobs:
 
     - name: Validate formulas
       run: |
+        # Add this tap locally
+        brew tap --custom-remote isfopo/homebrew-tap file://$(pwd)
+
         for formula in Formula/*.rb; do
           echo "Validating $formula..."
           brew style "$formula"
-          brew audit --formula "$formula" || echo "Audit warnings for $formula (may be expected for new formulas)"
+          formula_name=$(basename "$formula" .rb)
+          brew audit "$formula_name" || echo "Audit warnings for $formula (may be expected for new formulas)"
         done
 
   test-formulas:
@@ -54,8 +58,11 @@ jobs:
 
     - name: Test formula installation
       run: |
+        # Add this tap locally
+        brew tap --custom-remote isfopo/homebrew-tap file://$(pwd)
+
         # Test soundcheck formula
         if [ -f "Formula/soundcheck.rb" ]; then
           echo "Testing soundcheck formula..."
-          brew install --formula Formula/soundcheck.rb --build-from-source || echo "Formula test failed (expected for CI without real binaries)"
+          brew install soundcheck --build-from-source || echo "Formula test failed (expected for CI without real binaries)"
         fi
